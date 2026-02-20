@@ -53,6 +53,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.google.gson)
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.coil.compose)
 
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.gson)
