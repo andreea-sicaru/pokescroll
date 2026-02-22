@@ -2,6 +2,7 @@ package com.example.pokescroll.data.repository
 
 import com.example.pokescroll.data.mapper.toDomain
 import com.example.pokescroll.data.remote.PokeApi
+import com.example.pokescroll.domain.model.PartialPokemon
 import com.example.pokescroll.domain.model.Pokemon
 import com.example.pokescroll.domain.model.PokemonRepository
 import javax.inject.Inject
@@ -14,8 +15,13 @@ class PokemonRepositoryImpl @Inject constructor(private val api: PokeApi) : Poke
     override suspend fun getPokemonList(
         limit: Int,
         offset: Int
-    ): Result<List<Pokemon>> {
-        TODO("Implementing in Milestone 4 with Paging 3")
+    ): Result<List<PartialPokemon>> {
+        return try {
+            val response = api.getPokemons(limit, offset)
+            Result.success(response.results.map { it.toDomain() })
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     override suspend fun getPokemonDetails(id: Int): Result<Pokemon> {

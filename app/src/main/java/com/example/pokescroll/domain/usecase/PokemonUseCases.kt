@@ -7,5 +7,6 @@ package com.example.pokescroll.domain.usecase
  */
 data class PokemonUseCases(
     val getPokemonDetails: GetPokemonDetailsUseCase,
+    val searchPokemon: SearchPokemon
     // We will add getPokemonList, toggleFavorite, etc. here later
 )

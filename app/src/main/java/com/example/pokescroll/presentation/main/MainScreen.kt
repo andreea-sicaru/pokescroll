@@ -14,6 +14,7 @@ import com.example.pokescroll.presentation.details.DetailsScreen
 import com.example.pokescroll.presentation.home.HomeScreen
 import com.example.pokescroll.presentation.main.components.PokeBottomBar
 import com.example.pokescroll.presentation.navigation.Route
+import com.example.pokescroll.presentation.search.SearchScreen
 
 @Composable
 fun MainScreen() {
@@ -62,8 +63,9 @@ fun MainScreen() {
                         }
 
                         is Route.Search -> NavEntry(key) {
-                            // SearchScreen() // To be created
-                            Text("Search Screen")
+                            SearchScreen(onNavigateToDetails = {id -> backStack.add(Route.Details(id))})
+//                             SearchScreen() // To be created
+//                            Text("Search Screen")
                         }
 
                         is Route.Favourites -> NavEntry(key) {
