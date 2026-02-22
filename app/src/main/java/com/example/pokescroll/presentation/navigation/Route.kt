@@ -15,4 +15,6 @@ sealed class Route : NavKey {
     data class Details(val pokemonId: Int) : Route()
     @Serializable
     data object Favourites : Route()
+    @Serializable
+    data object Search : Route()
 }
