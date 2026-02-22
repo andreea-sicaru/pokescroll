@@ -27,7 +27,8 @@ import com.example.pokescroll.domain.model.Pokemon
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onNavigateToDetails: (Int) -> Unit
 ) {
     val state = viewModel.state.collectAsState().value
 
@@ -41,7 +42,7 @@ fun HomeScreen(
 
             LazyColumn {
                 items(state.pokemonList) { pokemon ->
-                    PokemonItem(pokemon = pokemon)
+                    PokemonItem(pokemon = pokemon, onClick = { onNavigateToDetails(pokemon.id) })
                 }
             }
 
@@ -51,8 +52,8 @@ fun HomeScreen(
 }
 
 @Composable
-fun PokemonItem(pokemon: Pokemon) {
-    Card(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+fun PokemonItem(pokemon: Pokemon, onClick: () -> Unit) {
+    Card(modifier = Modifier.fillMaxWidth().padding(8.dp), onClick = onClick) {
         Row(modifier = Modifier.padding(16.dp)) {
             AsyncImage(
                 model = pokemon.imageUrl,

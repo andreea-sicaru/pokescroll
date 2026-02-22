@@ -5,6 +5,7 @@ import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.example.pokescroll.presentation.details.DetailsScreen
 import com.example.pokescroll.presentation.home.HomeScreen
 
 
@@ -30,16 +31,16 @@ fun PokeNavHost() {
         entryProvider = { key ->
             when (key) {
                 is Route.Home -> NavEntry(key) {
-                    HomeScreen()
-//                    HomeScreen(onNavigateToDetails = { id -> backStack.add(Route.Details(id)) })
+                    HomeScreen(onNavigateToDetails = { id -> backStack.add(Route.Details(id)) })
+                }
+
+                is Route.Details -> NavEntry(key) {
+                    DetailsScreen(pokemonId = key.pokemonId)
                 }
 
                 else -> {
                     throw IllegalArgumentException("Invalid route: $key")
                 }
-//                is Route.Details -> NavEntry(key) {
-//                    DetailsScreen(pokemonId = key.pokemonId)
-//                }
 //                is Route.Favourites -> NavEntry(key) {
 //                    FavouritesScreen()
 //                }
