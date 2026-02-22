@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.pokescroll.presentation.home.HomeScreen
+import com.example.pokescroll.presentation.navigation.PokeNavHost
 import com.example.pokescroll.ui.theme.PokeScrollTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,14 +20,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PokeScrollTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // For now, we call HomeScreen directly.
-                    // We will replace this with Navigation soon.
-                    HomeScreen()
+                    // This is now our single entry point for all screens
+                    PokeNavHost()
                 }
             }
         }
