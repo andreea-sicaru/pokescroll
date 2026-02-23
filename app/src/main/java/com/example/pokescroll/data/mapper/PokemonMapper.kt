@@ -20,6 +20,6 @@ fun PokemonDto.toDomain(): Pokemon {
 fun PartialPokemonDto.toDomain(): PartialPokemon {
     return PartialPokemon(
         id = url.trimEnd('/').split('/').last().toInt(),
-        name = name
+        name = name.replaceFirstChar { it.uppercase() } // Clean up the name
     )
 }

@@ -33,6 +33,7 @@ class SearchViewModel @Inject constructor(private val useCases: PokemonUseCases)
 
     private suspend fun executeSearch(query: String) {
         _state.update { it.copy(isLoading = true) }
+
         val result = useCases.searchPokemon(query)
 
         result.onSuccess { partialPokemonList ->

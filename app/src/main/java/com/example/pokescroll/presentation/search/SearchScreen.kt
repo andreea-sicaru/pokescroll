@@ -19,12 +19,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.pokescroll.domain.model.PartialPokemon
 
 @Composable
@@ -32,9 +32,16 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
     onNavigateToDetails: (Int) -> Unit
 ) {
-    val state by viewModel.state.collectAsState()
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    // collectAsStateWithLifecycle is the recommended standard over collectAsState() for Android, as it automatically stops collecting when the app is in the background, saving even more battery.
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+
         OutlinedTextField(
             value = state.query,
             onValueChange = { viewModel.onQueryChanged(it) },
@@ -50,7 +57,9 @@ fun SearchScreen(
         } else {
             LazyVerticalGrid(columns = GridCells.Fixed(2)) {
                 items(state.results) { partialPokemon ->
-                    PokemonCard(pokemon = partialPokemon, onClick = { onNavigateToDetails(partialPokemon.id) })
+                    PokemonCard(
+                        pokemon = partialPokemon,
+                        onClick = { onNavigateToDetails(partialPokemon.id) })
                 }
             }
         }
@@ -59,15 +68,14 @@ fun SearchScreen(
 
 @Composable
 fun PokemonCard(pokemon: PartialPokemon, onClick: () -> Unit) {
-    Card(modifier = Modifier.fillMaxWidth().padding(8.dp), onClick = onClick) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        onClick = onClick
+    ) {
         Row(modifier = Modifier.padding(16.dp)) {
-//            AsyncImage(
-//                model = pokemon.imageUrl,
-//                contentDescription = pokemon.name,
-//                modifier = Modifier.size(80.dp)
-//            )
-//            Spacer(modifier = Modifier.width(16.dp))
-            Text(text = pokemon.name, style = MaterialTheme.typography.headlineSmall)
+            Text(text = pokemon.name, style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
