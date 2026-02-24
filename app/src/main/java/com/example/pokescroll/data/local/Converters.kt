@@ -1,7 +1,8 @@
 package com.example.pokescroll.data.local
 
-import androidx.room.TypeConverters
+import androidx.room.TypeConverter
 import com.example.pokescroll.domain.model.PokemonStat
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 /**
@@ -9,9 +10,9 @@ import kotlinx.serialization.json.Json
  */
 class Converters {
 
-    @TypeConverters
+    @TypeConverter
     fun fromStatList(value: List<PokemonStat>): String = Json.encodeToString(value)
 
-    @TypeConverters
+    @TypeConverter
     fun toStatList(value: String): List<PokemonStat> = Json.decodeFromString(value)
 }
